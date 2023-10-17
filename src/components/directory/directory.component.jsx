@@ -1,5 +1,5 @@
 import "./directory.styles.scss";
-import CategoryItem from "../components/category-item/category-item.component";
+import CategoryItem from "../category-item/category-item.component";
 
 import React from "react";
 
