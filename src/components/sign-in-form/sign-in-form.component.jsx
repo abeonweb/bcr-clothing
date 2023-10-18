@@ -1,14 +1,9 @@
-// import { useEffect } from "react";
 import { useState } from "react";
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
 import "./sign-in-form.styles.scss";
-// import { getRedirectResult } from "firebase/auth";
 import {
-  //   auth,
   signInWithGooglePopup,
-  //   signInWithGoogleRedirect,
-  createUserDocumentFromAuth,
   signInAuthUserWithEmailAndPassword,
 } from "../../utils/firebase/firebase.utils";
 
@@ -18,16 +13,6 @@ const defaultFormInputs = {
 };
 
 const SignInForm = () => {
-  //   useEffect(()=>{
-  //     async function getRedirect() {
-  //       const response = await getRedirectResult(auth);
-  //       if (response) {
-  //         const userDocRef = await createUserDocumentFromAuth(response.user);
-  //       }
-  //     }
-  //     getRedirect()
-  //   }, []);
-
   const [formInput, setformInput] = useState(defaultFormInputs);
   const { signInEmail, signInPassword } = formInput;
 
@@ -36,10 +21,9 @@ const SignInForm = () => {
     setformInput({ ...formInput, [name]: value });
   };
 
-  const logGoogleUser = async () => {
+  const signInWithGoogle = async () => {
     try {
-      const { user } = await signInWithGooglePopup();
-      await createUserDocumentFromAuth(user);
+      await signInWithGooglePopup();
     } catch (err) {
       console.log(err);
     }
@@ -48,11 +32,10 @@ const SignInForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const user = await signInAuthUserWithEmailAndPassword(
+      const {user} = await signInAuthUserWithEmailAndPassword(
         signInEmail,
         signInPassword
       );
-      console.log(user);
       resetFormFields();
     } catch (error) {
       const errorCode = error.code;
@@ -93,7 +76,7 @@ const SignInForm = () => {
         />
         <div className="form-button-container">
           <Button type="submit" onClick={handleChange}>Sign In</Button>
-          <Button onClick={logGoogleUser} buttonType={"google"}>
+          <Button onClick={signInWithGoogle} buttonType={"google"}>
             Google Sign In
           </Button>
         </div>
