@@ -1,7 +1,7 @@
-import { useContext } from "react";
-import { Outlet, Link } from "react-router-dom";
+import { Fragment, useContext } from "react";
+import { Outlet} from "react-router-dom";
 
-import Logo from "../../assets/logo.png";
+import logo from "../../assets/logo.png";
 import CartIcon from "../../components/cart-icon/cart-icon.component";
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
 
@@ -10,7 +10,7 @@ import { CartContext } from "../../context/cart.context";
 
 import { signOutUser } from "../../utils/firebase/firebase.utils";
 
-import "./navigation.styles.scss";
+import { NavigationContainer, LogoContainer, NavLink, NavLinks, Logo } from "./navigation.styles";
 
 
 const Navigation = () => {
@@ -18,31 +18,31 @@ const Navigation = () => {
   const { isCartOpen } = useContext(CartContext);
 
   return (
-    <>
-      <div className="navigation">
-        <Link className="logo-container" to={"/"}>
-          <img src={Logo} alt="BCR logo" className="logo" />
-        </Link>
-        <div className="nav-links-container">
-          <Link className="nav-link" to="/shop">
+    <Fragment>
+      <NavigationContainer>
+        <LogoContainer to={"/"}>
+          <Logo src={logo} alt="BCR logo" />
+        </LogoContainer>
+        <NavLinks>
+          <NavLink to="/shop">
             Shop
-          </Link>
+          </NavLink>
 
           {currentUser ? (
-            <span className="nav-link" onClick={signOutUser}>
+            <NavLink as="span" onClick={signOutUser}>
               Sign out
-            </span>
+            </NavLink>
           ) : (
-            <Link className="nav-link" to="/auth">
+            <NavLink to="/auth">
               Sign in
-            </Link>
+            </NavLink>
           )}
           <CartIcon />
-        </div>
-          {isCartOpen && <CartDropdown />}
-      </div>
+        </NavLinks>
+        {isCartOpen && <CartDropdown />}
+      </NavigationContainer>
       <Outlet />
-    </>
+    </Fragment>
   );
 };
 

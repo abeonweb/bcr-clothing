@@ -1,7 +1,7 @@
 import { useState } from "react";
 import FormInput from "../form-input/form-input.component";
-import Button from "../button/button.component";
-import "./sign-in-form.styles.scss";
+import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
+import { SignInFormContainer, FormButtonContainer } from "./sign-in-form.styles";
 import {
   signInWithGooglePopup,
   signInAuthUserWithEmailAndPassword,
@@ -32,15 +32,15 @@ const SignInForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const {user} = await signInAuthUserWithEmailAndPassword(
-        signInEmail,
-        signInPassword
-      );
+      await signInAuthUserWithEmailAndPassword(signInEmail, signInPassword);
       resetFormFields();
     } catch (error) {
       const errorCode = error.code;
-      if(errorCode === "auth/wrong-password" || errorCode === "auth/user-not-found"){
-        alert("Incorrect email or password entered")
+      if (
+        errorCode === "auth/wrong-password" ||
+        errorCode === "auth/user-not-found"
+      ) {
+        alert("Incorrect email or password entered");
       } else {
         console.error("There was an error signing you in.");
       }
@@ -52,7 +52,7 @@ const SignInForm = () => {
   };
 
   return (
-    <div className="sign-in-form-container">
+    <SignInFormContainer>
       <h2>I already have an account</h2>
       <span>Sign in with you email and password</span>
       <form onSubmit={handleSubmit}>
@@ -74,17 +74,22 @@ const SignInForm = () => {
           name="signInPassword"
           value={signInPassword}
         />
-        <div className="form-button-container">
-          <Button type="submit" onClick={handleChange}>Sign In</Button>
-          <Button onClick={signInWithGoogle} buttonType={"google"}>
+        <FormButtonContainer>
+          <Button type="submit" onClick={handleChange}>
+            Sign In
+          </Button>
+          <Button
+            onClick={signInWithGoogle}
+            buttonType={BUTTON_TYPE_CLASSES.google}
+          >
             Google Sign In
           </Button>
-        </div>
+        </FormButtonContainer>
         {/* <button onClick={signInWithGoogleRedirect}>
         Sign In with Google Redirect
       </button> */}
       </form>
-    </div>
+    </SignInFormContainer>
   );
 };
 
