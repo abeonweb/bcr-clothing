@@ -12,7 +12,7 @@ const DirectoryItem = ({ title, id, imageUrl, route }) => {
   const onRouteChangeHandler = () => navigate(route);
   return (
     <DirectoryItemContainer key={id} onClick={onRouteChangeHandler}>
-      <BackgroundImage imageurl={imageUrl} />
+      <BackgroundImage $imageurl={imageUrl} />
       <DirectoryBodyContainer>
             <h2>{title}</h2>
             <p>Shop now</p>

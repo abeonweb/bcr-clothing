@@ -1,14 +1,24 @@
-import { useContext } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import CheckoutItem from "../../components/checkout-item/checkout-item.component";
-
-import { CartContext } from "../../context/cart.context";
-
+import { CART_ACTIONS_TYPES } from "../../store/cart/cart.types";
+import { removeItemFromCart, changeQuantityOfItem, selectCartTotal } from "../../store/cart/cart.selector";
 import "./checkout.styles.scss";
+import { selectCartItems } from "../../store/cart/cart.selector";
 
 const Checkout = () => {
-  const { cartItems, changeQuantityOfItem, removeItemFromCart, cartTotal } = useContext(CartContext);
+  const cartItems = useSelector(selectCartItems);
+  const dispatch = useDispatch();
+  const cartTotal = useSelector(selectCartTotal);
 
-    
+  const handleRemoveItem = (id) => {
+    const newCart = removeItemFromCart(cartItems, id)
+    dispatch({ type: CART_ACTIONS_TYPES.SET_CART_ITEMS, payload: newCart });
+  }
+
+  const handleQuantityOfItem = (id, value) => {
+    const newCart = changeQuantityOfItem(cartItems, id, value)
+    dispatch({ type: CART_ACTIONS_TYPES.SET_CART_ITEMS, payload: newCart });
+  }
   return (
     <div className="checkout-container">
       <div className="checkout-header">
@@ -36,8 +46,8 @@ const Checkout = () => {
           <CheckoutItem
           key={item.id}
           item={item}
-          changeQuantityOfItem={changeQuantityOfItem}
-          removeItemFromCart={removeItemFromCart}
+          handleQuantityOfItem={handleQuantityOfItem}
+          removeItemFromCart={()=>handleRemoveItem(item.id)}
           />
           ))}
 <span  className="total">Total: ${cartTotal}</span>

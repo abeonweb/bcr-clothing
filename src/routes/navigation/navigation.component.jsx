@@ -1,21 +1,26 @@
 import { Fragment, useContext } from "react";
-import { Outlet} from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import logo from "../../assets/logo.png";
 import CartIcon from "../../components/cart-icon/cart-icon.component";
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
 
-import { UserContext } from "../../context/user.context";
-import { CartContext } from "../../context/cart.context";
-
 import { signOutUser } from "../../utils/firebase/firebase.utils";
 
-import { NavigationContainer, LogoContainer, NavLink, NavLinks, Logo } from "./navigation.styles";
-
+import {
+  NavigationContainer,
+  LogoContainer,
+  NavLink,
+  NavLinks,
+  Logo,
+} from "./navigation.styles";
+import { selectCurrentUser } from "../../store/user/user.selector";
+import { selectCartOpen } from "../../store/cart/cart.selector";
 
 const Navigation = () => {
-  const { currentUser } = useContext(UserContext);
-  const { isCartOpen } = useContext(CartContext);
+  const currentUser = useSelector(selectCurrentUser); //selects the part of state from the store. updates whenever state changes
+  const isCartOpen = useSelector(selectCartOpen); 
 
   return (
     <Fragment>
@@ -24,18 +29,14 @@ const Navigation = () => {
           <Logo src={logo} alt="BCR logo" />
         </LogoContainer>
         <NavLinks>
-          <NavLink to="/shop">
-            Shop
-          </NavLink>
+          <NavLink to="/shop">Shop</NavLink>
 
           {currentUser ? (
             <NavLink as="span" onClick={signOutUser}>
               Sign out
             </NavLink>
           ) : (
-            <NavLink to="/auth">
-              Sign in
-            </NavLink>
+            <NavLink to="/auth">Sign in</NavLink>
           )}
           <CartIcon />
         </NavLinks>

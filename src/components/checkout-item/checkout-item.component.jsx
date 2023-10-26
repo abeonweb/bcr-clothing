@@ -8,7 +8,7 @@ import {
   Value
 } from "./checkout-item.styles.jsx";
 
-const CheckoutItem = ({ item, changeQuantityOfItem, removeItemFromCart }) => {
+const CheckoutItem = ({ item, handleQuantityOfItem, removeItemFromCart }) => {
   const { id, name, imageUrl, quantity, price } = item;
   return (
     <CheckoutItemContainer>
@@ -17,11 +17,11 @@ const CheckoutItem = ({ item, changeQuantityOfItem, removeItemFromCart }) => {
       </ImageContainer>
       <ItemWidth>{name}</ItemWidth>
       <Quantity>
-        <Arrow onClick={() => changeQuantityOfItem(id, -1)}>
+        <Arrow onClick={() => handleQuantityOfItem(id, -1)}>
           &#10094;
         </Arrow>
         <Value>{quantity}</Value>
-        <Arrow onClick={() => changeQuantityOfItem(id, 1)}>
+        <Arrow onClick={() => handleQuantityOfItem(id, 1)}>
           &#10095;
         </Arrow>
       </Quantity>
