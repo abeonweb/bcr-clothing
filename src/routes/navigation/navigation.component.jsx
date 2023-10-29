@@ -1,4 +1,4 @@
-import { Fragment, useContext } from "react";
+import { Fragment } from "react";
 import { Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -8,6 +8,8 @@ import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component
 
 import { signOutUser } from "../../utils/firebase/firebase.utils";
 
+import { selectCurrentUser } from "../../store/user/user.selector";
+import { selectCartOpen } from "../../store/cart/cart.selector";
 import {
   NavigationContainer,
   LogoContainer,
@@ -15,8 +17,6 @@ import {
   NavLinks,
   Logo,
 } from "./navigation.styles";
-import { selectCurrentUser } from "../../store/user/user.selector";
-import { selectCartOpen } from "../../store/cart/cart.selector";
 
 const Navigation = () => {
   const currentUser = useSelector(selectCurrentUser); //selects the part of state from the store. updates whenever state changes

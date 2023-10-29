@@ -5,7 +5,8 @@ import {
   ItemImage,
   Quantity,
   Arrow,
-  Value
+  Value,
+  RemoveButton
 } from "./checkout-item.styles.jsx";
 
 const CheckoutItem = ({ item, handleQuantityOfItem, removeItemFromCart }) => {
@@ -26,9 +27,9 @@ const CheckoutItem = ({ item, handleQuantityOfItem, removeItemFromCart }) => {
         </Arrow>
       </Quantity>
       <ItemWidth>{price}</ItemWidth>
-      <div className="remove-button" onClick={() => removeItemFromCart(id)}>
+      <RemoveButton onClick={() => removeItemFromCart(id)}>
         &#10005;
-      </div>
+      </RemoveButton>
     </CheckoutItemContainer>
   );
 };
