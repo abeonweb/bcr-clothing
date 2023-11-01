@@ -1,4 +1,4 @@
-import { takeLatest, all, call, put } from 'redux-saga/effects'// side effect generators
+import { takeLatest, all, call, put } from 'redux-saga/effects';// side effect generators
 import {getCategoriesAndDocuments} from '../../utils/firebase/firebase.utils';
 import { fetchCategoriesSuccess, fetchCategoriesFailed } from './categories.action';
 import { CATEGORIES_ACTIONS_TYPES } from './categories.types';
@@ -14,6 +14,7 @@ export function* fetchCategoriesAsync() {
 }
 
 export function* onFetchCategories() {
+    //takeLatest returns the most recent of all actions 
     yield takeLatest(CATEGORIES_ACTIONS_TYPES.FETCH_CATEGORIES_START, fetchCategoriesAsync )
 }
 
