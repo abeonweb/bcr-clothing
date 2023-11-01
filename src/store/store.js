@@ -2,6 +2,7 @@ import { compose, legacy_createStore as createStore, applyMiddleware } from "red
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import logger from "redux-logger";
+// import logger from "./middleware/logger";
 import { rootReducer } from "./rootReducer";
 import thunk from "redux-thunk";
 
