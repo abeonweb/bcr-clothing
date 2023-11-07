@@ -16,4 +16,4 @@ export const fetchCategoriesAsync = () => async (dispatch) => {
     } catch (err) {
         dispatch(fetchCategoriesFailed(err))
     }
-
+}
